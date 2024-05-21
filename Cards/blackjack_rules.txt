@@ -1,0 +1,53 @@
+BETTING
+Now that you know the card values, it’s time to place a bet! You must place a bet before the dealer deals any of the cards. Use poker chips just like a casino, real money, or random objects to make a bet. All players must place a bet before the dealer can deal the cards to start the game!
+
+DEALING
+The dealer plays an important role in Blackjack. The dealer deals to their left and deals themself last. Each player receives one face up card, but the dealer must deal themselves a face down card so that no one can know the value of that card. Then, the dealer deals another round of cards for each player, ensuring all of the cards (including the dealer’s) is face up. The first card must still remain face down.
+
+INSURANCE BET
+If the dealer’s face up card is an ace, then players may purchase an insurance bet, a side bet. Insurance odds pay out at 2 out of 1 and the maximum bet is half of the original wager.
+
+The dealer then reveals the second card, and if he has blackjack, all players who purchased insurance are given their initial bet back.
+
+For example, if you bet $10 initially, and the dealer’s face up card is an ace, you can get insurance for $5. If the dealer then has a blackjack, you win $10 from the insurance as well as your original $5 bet back. You lose your initial $10 bet unless you also have a blackjack.
+
+However, if the dealer flips their face down card and they do not have a blackjack, you lose your $5 insurance bet money, and play continues as usual.
+
+An insurance bet is not always a good idea. It’s bet to place this bet if you have a hand of 15 or more so that you still have a chance of winning if you lose the insurance bet.
+
+EVEN MONEY
+If a player has blackjack and the dealer’s face up card is an ace, that player can place a different kind of insurance bet, also called taking even money. Here, the player may win the amount of their original bet back, paid out at that moment, no matter what the dealer’s card is. 
+
+So, if a player’s original bet was $100, and they have a blackjack and the dealer has an ace, that player may withdraw themselves from the round by taking $200.
+
+HITTING OR STANDING
+If the dealer does not deal himself an ace as a face-up card, then they will ask the player on their left if they would like to “hit” or “stand.”
+
+Hit: Ask for another card. Gesture a hit by tapping the game table with your finger. Keep hitting until you want to stand. Just cross your fingers that you don’t bust, which means you’re out of that round! There is no limit on how many cards, so you can take as many as you want until you are satisfied.
+Stand: Pass. Gesture a stand by waving your hand over the table 
+Play continues in a clockwise direction until all players decide to either hit or stand.
+
+So, how do you decide whether to hit or stand? It is totally up to you, but as a general rule, if your two cards are close enough to 21, especially compared to the dealer’s hand, you might be better off standing or staying. However, on the flip side, if your total is in the single digits, you might benefit from hitting and adding another card to your hand.
+
+REVEALING THE DEALER’S SECOND CARD
+Now that every player has had a chance to hit or stand, it’s time for the dealer to reveal their hidden second card! The dealer flips over their card. If the total is 16 or lower, the dealer must hit and take a third card. However, if the cards add up to 17 or more, the dealer must stand. All players that have a card total higher than the dealer wins!
+
+Note that if the dealer has a blackjack, all players lose the round unless they also have a blackjack, which is called a push.
+
+In the case of a push, or tie, the player gets their original bet back. So, that player does not win or lose.
+
+PAYOUTS
+Okay, so once everyone (including the dealer) has finished playing their hand, there are five potential outcomes:
+
+The dealer busts, in which case they pay even money to each hand still on the table. So, for example, if you bet $100, you would $100 and your money back, for a total of $200.
+The dealer makes a hand from 17 to 21, and you have the higher hand. Then, the dealer pays you one times your wager, so if you bet $100, you would win $100 and your money back, for a total of $200.
+The dealer makes a hand from 17 to 21, and the dealer has the higher hand. Then, the dealer sweeps your bet.
+You have a blackjack and beat the dealer. Then, the dealer pays you out at a 3:2 ratio, which means if you bet $100, you would win $150 and your money back, for a total of $250.
+As mentioned above, if you and the dealer have the same hand, this is a push, and the player gets their original bet back.
+
+SURRENDERING
+If you have a pretty bad hand and don’t think there’s any chance of winning your money back, one option is for you to surrender to the dealer instead of hitting or staying. When you surrender, you simply give up in exchange for half the original bet back, saving you from total loss.
+
+To gesture and signal a surrender, slide your index finger across the game table horizontally. Just in case the dealer misses your full gesture, verbalize the word “surrender” as you gesture.
+
+Keep in mind that not all casinos allow surrenders!
