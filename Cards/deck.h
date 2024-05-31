@@ -14,4 +14,3 @@ void initDeck(tDeck& deck);
 void shuffle(tDeck& deck);
 void destroy(tDeck& deck);
 #endif // !deck_h
-

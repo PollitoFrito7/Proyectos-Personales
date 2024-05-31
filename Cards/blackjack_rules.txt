@@ -13,7 +13,7 @@ For example, if you bet $10 initially, and the dealer’s face up card is an ace
 
 However, if the dealer flips their face down card and they do not have a blackjack, you lose your $5 insurance bet money, and play continues as usual.
 
-An insurance bet is not always a good idea. It’s bet to place this bet if you have a hand of 15 or more so that you still have a chance of winning if you lose the insurance bet.
+An insurance bet is not always a good idea. It’s best to place this bet if you have a hand of 15 or more so that you still have a chance of winning if you lose the insurance bet.
 
 EVEN MONEY
 If a player has blackjack and the dealer’s face up card is an ace, that player can place a different kind of insurance bet, also called taking even money. Here, the player may win the amount of their original bet back, paid out at that moment, no matter what the dealer’s card is. 

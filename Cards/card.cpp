@@ -11,7 +11,7 @@ char suitChar(const tSuit& suit) {
 }
 
 char numDisplay(const int& num) {
-	return num < 10 ? char(int('0') + num) : num == 10? 'T' : num == 11 ? 'J' : num == 12 ? 'Q' : 'K';
+	return num == 1? 'A' : num < 10 ? char(int('0') + num) : num == 10 ? 'T' : num == 11 ? 'J' : num == 12 ? 'Q' : 'K';
 }
 
 void displayTop(const tCard & card) {
