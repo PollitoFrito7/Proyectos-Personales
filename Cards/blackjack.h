@@ -10,12 +10,12 @@
 struct tPlayer {
 	tHand hand;
 	double bank = 0;
-	std::string name = "CRUPIER";
+	std::string name = "CROUPIER";
 };
 
 struct tBJGame {
 	tDeck deck;
-	tPlayer crupier;
+	tPlayer croupier;
 	tPlayer player1;
 	tPlayer split;
 	double bet; 

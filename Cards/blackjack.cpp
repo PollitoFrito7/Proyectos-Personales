@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include <conio.h>
 #include <algorithm>
+#include <fstream>
 #include <Windows.h>
 #include <mmsystem.h>
 using namespace std;
@@ -27,11 +28,36 @@ int chooseCard(tDeck& deck) {
 void destroy(tPlayer& player) {
 	destroy(player.hand);
 	player.bank = 50;
-	player.name = "CRUPIER";
+	player.name = "croupier";
 }
 // auxiliary function, checks if the hand of a player is blackjack
 bool isBlackjack(const tPlayer& player) {
 	return player.hand.counter == 2 && sum(player) == 21;
+}
+// auxiliary function, counts the number of reactions on a file
+int reactionCount(ifstream& file, string fileName) {
+	int reactionCounter = 0;
+
+	file.open(fileName);
+	getline(file, fileName);
+	while (fileName != "XXX") {
+		reactionCounter++;
+		getline(file, fileName);
+	}
+	file.close();
+
+	return reactionCounter;
+}
+// auxiliary function, chooses a reaction at random
+string randomReaction(ifstream& file, int numReactions, string fileName) {
+	int randNum = rand() % numReactions + 1;
+
+	file.open(fileName);
+	for (int i = 0; i < randNum; i++)
+		getline(file, fileName);
+	file.close();
+	
+	return fileName;
 }
 
 int sum(tPlayer player) {
@@ -51,7 +77,7 @@ int sum(tPlayer player) {
 
 void init(tBJGame& game) {
 	initDeck(game.deck);
-	game.crupier.bank = 1000000;
+	game.croupier.bank = 1000000;
 	game.player1.bank = 500;
 	game.split.bank = 0;
 
@@ -89,8 +115,10 @@ void display(const tBJGame& game) {
 		cout << "-";
 	}
 
-	cout << endl << "CRUPIER'S HAND:" << endl;
-	display(game.crupier.hand);
+	cout << endl << "CROUPIER'S HAND:" << endl;
+	display(game.croupier.hand);
+	if (game.croupier.hand.counter != 0 && !game.croupier.hand.cards[0]->hidden)
+		cout << "HAND VALUE: " << sum(game.croupier) << endl << endl;
 	cout << endl;
 
 	for (int i = 0; i < DashLine; i++) {
@@ -101,21 +129,22 @@ void display(const tBJGame& game) {
 	cout << playerMoney << setw(10) << left << fixed << setprecision(2) << game.player1.bank;
 	cout << "BET: " << fixed << setprecision(2) << game.bet << endl;
 	display(game.player1.hand);
-	cout << endl;
+	cout << "HAND VALUE: " << sum(game.player1) << endl << endl;
+
 	if (game.split.hand.counter != 0) {
 		cout << "SPLIT HAND:" << endl;
 		display(game.split.hand);
-		cout << endl;
+		cout << "SPLIT VALUE: " << sum(game.player1) << endl << endl;
 	}
 
 }
 
 bool canInsurance(const tBJGame& game) {
-	return game.player1.hand.counter == 2 && game.crupier.hand.cards[1]->number == 1;
+	return game.player1.hand.counter == 2 && game.croupier.hand.cards[1]->number == 1;
 }
 
 bool canEven(const tBJGame& game) {
-	return game.crupier.hand.cards[1]->number == 1 && game.player1.hand.counter == 2 && game.split.hand.counter == 0 && sum(game.player1) == 21;
+	return game.croupier.hand.cards[1]->number == 1 && game.player1.hand.counter == 2 && game.split.hand.counter == 0 && sum(game.player1) == 21;
 }
 
 bool canSplit(const tBJGame& game) {
@@ -186,12 +215,12 @@ bool insurance(tBJGame& game) {
 		cin >> insuranceMoney;
 	}
 
-	game.crupier.hand.cards[0]->hidden = false;
+	game.croupier.hand.cards[0]->hidden = false;
 	PlaySound(TEXT("flip_card.wav"), NULL, SND_ASYNC);
 	display(game);
 	Sleep(1000);
 
-	if (sum(game.crupier) == 21) {
+	if (sum(game.croupier) == 21) {
 		PlaySound(TEXT("luigi_coño"), NULL, SND_ASYNC);
 		cout << "I fucking despise insurances." << endl;
 		game.player1.bank -= (game.bet - insuranceMoney * 2);
@@ -202,7 +231,7 @@ bool insurance(tBJGame& game) {
 		game.player1.bank -= insuranceMoney;
 	}
 
-	return sum(game.crupier) == 21;
+	return sum(game.croupier) == 21;
 }
 
 void even(tBJGame& game) {
@@ -230,22 +259,63 @@ void surrender(tBJGame& game) {
 void hit(tBJGame& game, tPlayer& player) {
 	int index = 0;
 
-	index = chooseCard(game.deck);
+	if (game.player1.name == "win") {
+		if (game.player1.name == player.name) {
+			if (player.hand.counter == 0)
+				add(player.hand, game.deck.cards[0]);
+			else
+				add(player.hand, game.deck.cards[12]);
+		}
 
+		else {
+			if (player.hand.counter == 0)
+				add(player.hand, game.deck.cards[8]);
+			else
+				add(player.hand, game.deck.cards[12]);
+		}
+	}
+
+	else if (game.player1.name == "lose") {
+		if (game.player1.name == player.name) {
+			if (player.hand.counter == 0)
+				add(player.hand, game.deck.cards[8]);
+			else
+				add(player.hand, game.deck.cards[12]);
+		}
+
+		else {
+			if (player.hand.counter == 0)
+				add(player.hand, game.deck.cards[0]);
+			else
+				add(player.hand, game.deck.cards[12]);
+		}
+	}
+
+	else if (game.player1.name == "draw") {
+		if (player.hand.counter == 0)
+			add(player.hand, game.deck.cards[11]);
+		else
+			add(player.hand, game.deck.cards[12]);
+	}
+
+	else {
+	index = chooseCard(game.deck);
 	add(player.hand, game.deck.cards[index]);
-	if (player.name == "CRUPIER" && player.hand.counter == 1) {
+	}
+
+	if (player.name == "CROUPIER" && player.hand.counter == 1) {
 		player.hand.cards[player.hand.counter - 1]->hidden = true;
 	}
 
-	PlaySound(TEXT("card_dealt.wav"), NULL, SND_ASYNC);
+	PlaySound(TEXT("Sound_effects\\card_dealt"), NULL, SND_FILENAME | SND_ASYNC);
 }
 
 void dealing(tBJGame& game) {
-	while (game.crupier.hand.counter < 2) {
+	while (game.croupier.hand.counter < 2) {
 		hit(game, game.player1);
 		display(game);
 		Sleep(1000); // 1000 = 1 second
-		hit(game, game.crupier);
+		hit(game, game.croupier);
 		display(game);
 		Sleep(1000);
 	}
@@ -284,11 +354,10 @@ void playing(tBJGame& game, string& move, string& splitMove, bool& insurancePaid
 			}
 		}
 
-		else
-			cout << endl;
-		
+		if (move == "STAND")
+			cout << endl;		
 
-		if (splitMove != "STAND" && move != "SPLIT" && game.split.hand.counter != 0) {
+		if (splitMove != "STAND" && move != "SPLIT" && game.split.hand.counter != 0) {	
 			cout << "-SPLIT HAND-" << endl;
 			splitMove = menu(game);
 
@@ -304,104 +373,135 @@ void playing(tBJGame& game, string& move, string& splitMove, bool& insurancePaid
 }
 
 void showdown(tBJGame& game) {
-	int crupierSum = 0, playerSum = 0, splitSum = 0;
+	int croupierSum = 0, playerSum = 0, splitSum = 0;
 
-	crupierSum = sum(game.crupier);
+	croupierSum = sum(game.croupier);
 	playerSum = sum(game.player1);
 	splitSum = sum(game.split);
 
-	if (game.crupier.hand.cards[0]->hidden == true) {
-		game.crupier.hand.cards[0]->hidden = false;
-		PlaySound(TEXT("flip_card.wav"), NULL, SND_ASYNC);
+	if (game.croupier.hand.cards[0]->hidden == true) {
+		game.croupier.hand.cards[0]->hidden = false;
+		PlaySound(TEXT("Sound_effects\\flip_card"), NULL, SND_FILENAME | SND_ASYNC);
 		display(game);
 		Sleep(1000);
 	}
 
-	while (crupierSum <= 16) {
-		hit(game, game.crupier);
+	while (croupierSum <= 16) {
+		hit(game, game.croupier);
 		display(game);
 		Sleep(1000);
-		crupierSum = sum(game.crupier);
+		croupierSum = sum(game.croupier);
 	}
 }
 
 bool win(const tBJGame& game, const tPlayer& player) {
 	int playerHandValue = sum(player);
-	int crupierHandValue = sum(game.crupier);
+	int croupierHandValue = sum(game.croupier);
 
-	return (crupierHandValue > 21 && playerHandValue <= 21) || (playerHandValue <= 21 && playerHandValue > crupierHandValue);
+	return (croupierHandValue > 21 && playerHandValue <= 21) || (playerHandValue <= 21 && playerHandValue > croupierHandValue);
 }
 
 bool loose(const tBJGame& game, const tPlayer& player) {
 	int playerHandValue = sum(player);
-	int crupierHandValue = sum(game.crupier);
+	int croupierHandValue = sum(game.croupier);
 
-	return (playerHandValue > 21) || (playerHandValue <= 21 && playerHandValue < crupierHandValue);
+	return (playerHandValue > 21) || (playerHandValue <= 21 && playerHandValue < croupierHandValue);
 }
 
 void distributeMoney(tBJGame& game, string move) {
+	ifstream file;
+	string reaction, soundEffect;
+	int randNum = 0, numReactionsPW = 0, numReactionsPL = 0, numSoundsDraw = 0;
+
+	numReactionsPW = reactionCount(file, "PlayerWinsReactions.txt");
+
+	numReactionsPL = reactionCount(file, "PlayerLosesReactions.txt");
+
+	numSoundsDraw = reactionCount(file, "DrawSounds.txt");
 
 	// no split
 	if (game.split.hand.counter == 0) {
 		if (win(game, game.player1)) {
-			PlaySound(TEXT("luigi_coño"), NULL, SND_ASYNC);
-			cout << "Lucky bastard! It wont happen again!" << endl;
+			reaction = randomReaction(file, numReactionsPW, "playerWinsReactions.txt");
+			PlaySound(TEXT("Sound_effects\\luigi_coño"), NULL, SND_FILENAME | SND_ASYNC);
+			cout << reaction << endl;
 			isBlackjack(game.player1)? game.player1.bank += game.bet * 1.5 : game.player1.bank += game.bet;
 		}
 
 		else if (loose(game, game.player1)) {
-			cout << "You lose, sucker!" << endl;
+			reaction = randomReaction(file, numReactionsPL, "playerLosesReactions.txt");
+			PlaySound(TEXT("Sound_effects\\hihihiha"), NULL, SND_FILENAME | SND_ASYNC);
+			cout << reaction << endl;
 			game.player1.bank -= game.bet;
 		}
 
 		else {
+			soundEffect = "Sound_effects\\";
+			soundEffect += randomReaction(file, numSoundsDraw, "DrawSounds.txt");
+			std::wstring stemp = std::wstring(soundEffect.begin(), soundEffect.end());
+			LPCWSTR sw = stemp.c_str();
 			cout << "Would you look at that, it is a draw." << endl;
+			PlaySound((LPCWSTR)sw, NULL, SND_FILENAME | SND_ASYNC);
+
 		}
 	}
 
 	// with split
 	else {
 		if (win(game, game.player1)) {
-			PlaySound(TEXT("luigi_coño"), NULL, SND_ASYNC);
 			cout << "Your main hand beat my ass!" << endl;
+			PlaySound(TEXT("Sound_effects\\luigi_coño"), NULL, SND_FILENAME | SND_SYNC);
 			isBlackjack(game.player1) ? game.player1.bank += game.bet * 1.5 : game.player1.bank += game.bet;
 		}
 
 		else if (loose(game, game.player1)) {
 			cout << "your main hand was shit." << endl;
+			PlaySound(TEXT("Sound_effects\\hihihiha"), NULL, SND_FILENAME | SND_SYNC);
 			game.player1.bank -= game.bet;
 		}
 
 		else {
+			soundEffect = "Sound_effects\\";
+			soundEffect += randomReaction(file, numSoundsDraw, "DrawSounds.txt");
+			std::wstring stemp = std::wstring(soundEffect.begin(), soundEffect.end());
+			LPCWSTR sw = stemp.c_str();
 			cout << "you better hope your split hand is better, I hate draws." << endl;
+			PlaySound((LPCWSTR)sw, NULL, SND_FILENAME | SND_ASYNC);
 		}
 
 		if (win(game, game.split)) {
 			cout << "That split was crazy good!" << endl;
+			PlaySound(TEXT("Sound_effects\\luigi_coño"), NULL, SND_FILENAME | SND_SYNC);
 			isBlackjack(game.split) ? game.player1.bank += game.bet * 1.5 : game.player1.bank += game.bet;
 		}
 
 		else if (loose(game, game.split)) {
 			cout << "That split was crazy dumb!" << endl;
+			PlaySound(TEXT("Sound_effects\\hihihiha"), NULL, SND_FILENAME | SND_SYNC);
 			game.player1.bank -= game.bet;
 		}
 
 		else {
+			soundEffect = "Sound_effects\\";
+			soundEffect += randomReaction(file, numSoundsDraw, "DrawSounds.txt");
+			std::wstring stemp = std::wstring(soundEffect.begin(), soundEffect.end());
+			LPCWSTR sw = stemp.c_str();
 			cout << "The split is a draw." << endl;
+			PlaySound((LPCWSTR)sw, NULL, SND_FILENAME | SND_ASYNC);
 		}
 	}
 }
 
 void roundReset(tBJGame& game) {
 	shuffle(game.deck);
-	destroy(game.crupier.hand);
+	destroy(game.croupier.hand);
 	destroy(game.player1.hand);
 	destroy(game.split.hand);
 }
 
 void destroy(tBJGame& game) {
 	destroy(game.deck);
-	destroy(game.crupier);
+	destroy(game.croupier);
 	destroy(game.player1);
 	destroy(game.split);
 	game.bet = 0;

@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{817f400e-eed5-4e86-8b58-176b22080973}</ProjectGuid>
-    <RootNamespace>Cards</RootNamespace>
+    <ProjectGuid>{52d9f09f-cd0e-4742-904a-e42db8bb81cf}</ProjectGuid>
+    <RootNamespace>Piano</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -82,9 +82,6 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
-  <PropertyGroup Label="Vcpkg">
-    <VcpkgEnableManifest>true</VcpkgEnableManifest>
-  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -123,8 +120,6 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>
-      </AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -144,19 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="blackjack.cpp" />
-    <ClCompile Include="card.cpp" />
-    <ClCompile Include="deck.cpp" />
-    <ClCompile Include="hand.cpp" />
     <ClCompile Include="Source.cpp" />
-    <ClCompile Include="stringPool.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="blackjack.h" />
-    <ClInclude Include="card.h" />
-    <ClInclude Include="deck.h" />
-    <ClInclude Include="hand.h" />
-    <ClInclude Include="stringPool.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

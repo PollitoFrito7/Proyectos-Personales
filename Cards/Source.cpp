@@ -4,8 +4,10 @@
 #include <cstdlib>
 #include <ctime>
 #include <string>
+#include <conio.h>
 #include <Windows.h>
 #include <mmsystem.h>
+#include <curses.h>
 using namespace std;
 
 // if this is not here sound explodes for some reason
@@ -15,11 +17,7 @@ using namespace std;
 #include "deck.h"
 #include "hand.h"
 #include "blackjack.h"
-//TODO// SOUND IMPLEMENTED, FILL THAT SHIT UP WITH SFX
-//TODO// impplement different pools of responses and sounds 
-//TODO// implement a real play again feature
-//TODO// implement a way to win the table
-//TODO// fix the display of the hand (FUCK IOMANIP)
+
 int main() {
 	{
 		tBJGame game;
@@ -30,6 +28,7 @@ int main() {
 
 		srand(time(NULL));
 		
+		initscr();
 		init(game);
 
 		do {
@@ -46,7 +45,8 @@ int main() {
 				distributeMoney(game, move);
 
 
-				cout << "PLAY AGAIN? ";
+				cout << "Are you ready to play another round?" << endl;
+				cout << "YOUR RESPONSE [Y/N]: ";
 				cin >> ok;
 				ok = toupper(ok);
 				system("cls");
@@ -54,10 +54,11 @@ int main() {
 
 			else {
 				cout << "You poor already? Good. Now get the fuck out." << endl;
+				_getch();
 				ok = 'n';
 			}
 			
-			if (ok == 'Y') {
+			if (game.player1.bank != 0 && ok == 'Y') {
 				cout << "SHUFFLING...";
 				move = "";
 				splitMove = "";
@@ -67,6 +68,7 @@ int main() {
 			}
 		} while (ok == 'Y');
 		destroy(game);
+		endwin();
 	}
 
 	_CrtDumpMemoryLeaks(); // Memory leaks detection

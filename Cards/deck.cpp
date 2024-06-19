@@ -34,7 +34,7 @@ void shuffle(tDeck& deck) {
 		deck.drawn[i] = false;
 	}
 
-	PlaySound(TEXT("shuffle_deck.wav"), NULL, SND_SYNC);
+	PlaySound(TEXT("Sound_effects\\shuffle_deck"), NULL, SND_FILENAME | SND_SYNC);
 }
 
 void destroy(tDeck& deck) {
